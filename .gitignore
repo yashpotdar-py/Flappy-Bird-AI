@@ -1,0 +1,5 @@
+*.pyc
+.flappy_venv
+flappy_venv/
+__pypackages__/
+__pycache__/
