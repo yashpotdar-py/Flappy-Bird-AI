@@ -1,6 +1,6 @@
- ## Flappy Bird NEAT
+ ## Flappy Bird AI using NEAT
 
-This is a recreation of the classic Flappy Bird game using the NEAT algorithm to train a neural network to play the game.
+This is a recreation of the classic Flappy Bird game using the NEAT algorithm to train a neural network to play the game and PyGame.
 
 ### Prerequisites
 
@@ -15,7 +15,7 @@ This is a recreation of the classic Flappy Bird game using the NEAT algorithm to
 1. Install Python 3.6 or later.
 2. Install Pygame: `pip install pygame`
 3. Install NEAT-python: `pip install neat-python`
-4. Install Graphviz (optional): `brew install graphviz` (on macOS) or `apt-get install graphviz` (on Ubuntu)
+4. Install Graphviz (optional): `pip install graphviz`
 5. Install Matplotlib (optional): `pip install matplotlib`
 
 ### Usage
