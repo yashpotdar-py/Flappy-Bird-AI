@@ -1,6 +1,6 @@
 """
 The classic game of flappy bird. Make with python
-and pygame. Features pixel perfect collision using masks
+and pygame and NEAT algorithm.
 """
 import pygame
 import random
@@ -47,9 +47,6 @@ class Bird:
     def __init__(self, x, y):
         """
         Initialize the object
-        :param x: starting x pos (int)
-        :param y: starting y pos (int)
-        :return: None
         """
         self.x = x
         self.y = y
@@ -63,7 +60,6 @@ class Bird:
     def jump(self):
         """
         make the bird jump
-        :return: None
         """
         self.vel = -10.5
         self.tick_count = 0
@@ -72,7 +68,6 @@ class Bird:
     def move(self):
         """
         make the bird move
-        :return: None
         """
         self.tick_count += 1
 
@@ -99,8 +94,6 @@ class Bird:
     def draw(self, window):
         """
         draw the bird
-        :param window: pygame window or surface
-        :return: None
         """
         self.img_count += 1
 
@@ -128,7 +121,6 @@ class Bird:
     def get_mask(self):
         """
         gets the mask for the current image of the bird
-        :return: None
         """
         return pygame.mask.from_surface(self.img)
 
@@ -143,9 +135,6 @@ class Pipe():
     def __init__(self, x):
         """
         initialize pipe object
-        :param x: int
-        :param y: int
-        :return" None
         """
         self.x = x
         self.height = 0
@@ -164,7 +153,6 @@ class Pipe():
     def set_height(self):
         """
         set the height of the pipe, from the top of the screen
-        :return: None
         """
         self.height = random.randrange(50, 450)
         self.top = self.height - self.PIPE_TOP.get_height()
@@ -173,15 +161,12 @@ class Pipe():
     def move(self):
         """
         move pipe based on vel
-        :return: None
         """
         self.x -= self.VEL
 
     def draw(self, window):
         """
         draw both the top and bottom of the pipe
-        :param window: pygame window/surface
-        :return: None
         """
         # draw top
         window.blit(self.PIPE_TOP, (self.x, self.top))
@@ -191,8 +176,6 @@ class Pipe():
     def collide(self, bird, window):
         """
         returns if a point is colliding with the pipe
-        :param bird: Bird object
-        :return: Bool
         """
         bird_mask = bird.get_mask()
         top_mask = pygame.mask.from_surface(self.PIPE_TOP)
@@ -220,8 +203,6 @@ class Base:
     def __init__(self, y):
         """
         Initialize the object
-        :param y: int
-        :return: None
         """
         self.y = y
         self.x1 = 0
@@ -230,7 +211,6 @@ class Base:
     def move(self):
         """
         move floor so it looks like its scrolling
-        :return: None
         """
         self.x1 -= self.VEL
         self.x2 -= self.VEL
@@ -243,8 +223,6 @@ class Base:
     def draw(self, window):
         """
         Draw the floor. This is two images that move together.
-        :param window: the pygame surface/window
-        :return: None
         """
         window.blit(self.IMG, (self.x1, self.y))
         window.blit(self.IMG, (self.x2, self.y))
@@ -253,11 +231,6 @@ class Base:
 def blitRotateCenter(surf, image, topleft, angle):
     """
     Rotate a surface and blit it to the window
-    :param surf: the surface to blit to
-    :param image: the image surface to rotate
-    :param topLeft: the top left position of the image
-    :param angle: a float value for angle
-    :return: None
     """
     rotated_image = pygame.transform.rotate(image, angle)
     new_rect = rotated_image.get_rect(
@@ -269,13 +242,6 @@ def blitRotateCenter(surf, image, topleft, angle):
 def draw_window(window, birds, pipes, base, score, gen, pipe_ind):
     """
     draws the windows for the main game loop
-    :param window: pygame window surface
-    :param bird: a Bird object
-    :param pipes: List of pipes
-    :param score: score of the game (int)
-    :param gen: current generation
-    :param pipe_ind: index of closest pipe
-    :return: None
     """
     if gen == 0:
         gen = 1
@@ -413,17 +379,10 @@ def eval_genomes(genomes, config):
 
         draw_window(WINDOW, birds, pipes, base, score, gen, pipe_ind)
 
-        # break if score gets large enough
-        '''if score > 20:
-            pickle.dump(nets[0],open("best.pickle", "wb"))
-            break'''
-
 
 def run(config_file):
     """
     runs the NEAT algorithm to train a neural network to play flappy bird.
-    :param config_file: location of config file
-    :return: None
     """
     config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction,
                                 neat.DefaultSpeciesSet, neat.DefaultStagnation,
